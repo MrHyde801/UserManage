@@ -1,24 +1,26 @@
 const express = require('express')
-const exphbs = require('express-handlebars')
-const bodyPars = require('body-parser')
-const mySQL = require('mysql');
+const hbs = require('express-handlebars')
 const bodyParser = require('body-parser');
+const fs = require('fs')
 
-require('dotenv').config();
 
-const app = express();
+let app = express();
 const port = process.env.PORT || 5050;
+const routes = require('./server/routes/user')
 
-// Parsing Middlewar
-// Parse Application
-app.use(bodyParser.urlencoded({ extended: false }))
 
-// Parse Application/Json
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-
-
 app.use(express.static('public'))
+app.use('/', routes);
 
+
+//Templating Engine
+app.set('view engine', 'hbs');
+app.engine('hbs', hbs.engine({
+    extname: '.hbs',
+}));
 
 
 app.listen(port, () => {
