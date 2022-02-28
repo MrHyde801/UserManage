@@ -48,7 +48,7 @@ exports.create = (req,res) => {
         } else {
             try {
                 data = JSON.parse(jsonString);
-                user.number = data.users.length
+                user.number = data.users.length + 1
                 data.users.push(user)
                 console.log(data.users)
                 let newJson = JSON.stringify(data)
